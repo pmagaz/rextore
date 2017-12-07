@@ -8,7 +8,7 @@ export interface Rextore {
 
 export interface Action {
   type: string
-  payload?: any
+  payload?: object
 }
 
 export interface Reducer<T> {

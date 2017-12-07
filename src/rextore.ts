@@ -13,18 +13,21 @@ export const createStore = <T>(initialState: T, reducer: Reducer<T>): Rextore =>
     console.log('[DISPATCHING]', action)
     store$.next(action)
   }
-    const storeReducer = (): Observable<any> => (
-    store$.pipe(
-      scan((state: T, action: any, index: number) => reducer(state, action))
-    )
+
+  const storeReducer = (): Observable<any> => (
+    store$
+      .pipe(
+        scan((state: T, action: any, index: number) => reducer(state, action))
+      )
   )
 
   const connect = <R>(selector: ((state: T) => R), fn: Function): Subscription => (
-    storeReducer().pipe(
-      map(selector),
-      distinctUntilChanged(),
-      tap(x => console.log('[SELECTOR]', x)),
-    )
+    storeReducer()
+      .pipe(
+        map(selector),
+        distinctUntilChanged(),
+        tap(x => console.log('[SELECTOR]', x)),
+      )
     .subscribe(next => fn(next))
   )
 
