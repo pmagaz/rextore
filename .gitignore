@@ -1,0 +1,12 @@
+*.log
+.idea
+coverage/
+dist/
+lib/
+build/
+*.vimrc
+.DS_STORE
+node_modules/
+bower_components/
+.nyc_output/
+.vscode/

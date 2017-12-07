@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "stripInternal": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitOnError": false,
+    "outDir": "./build",
+    "rootDir": ".",
+    "lib": ["es2015"],
+    "target": "es5",
+    "skipLibCheck": true,
+    "types": [
+      "node"
+    ]
+  },
+  "exclude": [
+	  "node_modules"
+  ],
+  "angularCompilerOptions": {
+    "strictMetadataEmit": true
+  }
+}

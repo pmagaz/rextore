@@ -1,0 +1,47 @@
+{
+  "name": "rextore",
+  "version": "0.8.0",
+  "description": "Reactive State container",
+  "author": {
+    "name": "Pablo Magaz",
+    "email": "magazpablo@gmail.com"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rimraf lib coverage",
+    "build": "babel src --out-dir lib",
+    "test:coverage": "nyc npm test && nyc report --reporter=lcov",
+    "lint": "tslint \"src/**/*.ts\"",
+    "test": "mocha  --compilers js:babel-core/register \"./spec/**/*.spec.js\"",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
+    "prepublish": "npm run lint && npm run test:coverage && npm run clean && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pmagaz/redux-req-middleware.git"
+  },
+  "keywords": [
+    "reactive",
+    "redux",
+    "store",
+    "state",
+    "rxjs"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pmagaz/rextore/issues"
+  },
+  "homepage": "https://github.com/pmagaz/rextore#readme",
+  "devDependencies": {
+    "@types/node": "^8.0.54",
+    "chai": "4.0.2",
+    "coveralls": "2.13.1",
+    "mocha": "3.4.2",
+    "nyc": "11.0.3",
+    "rimraf": "2.6.1",
+    "rxjs": "5.5.3",
+    "tslint": "5.8.0",
+    "tslint-eslint-rules": "^4.1.1",
+    "typescript": "2.6.2"
+  }
+}
