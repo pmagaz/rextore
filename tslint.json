@@ -1,7 +1,5 @@
 {
-  "extends": [
-    "tslint-eslint-rules"
-  ],
+  "extends": ["tslint-eslint-rules", "tslint-config-prettier"],
   "rules": {
     "no-empty": false,
     "class-name": true,
@@ -19,7 +17,7 @@
     "no-arg": true,
     "object-literal-sort-keys": false,
     "no-bitwise": true,
-    "trailing-comma": [false, {"multiline": "always", "singleline": "never"}],
+    "trailing-comma": [false, { "multiline": "always", "singleline": "never" }],
     "no-console": [false],
     "no-duplicate-variable": true,
     "no-eval": true,
@@ -35,12 +33,9 @@
       "check-open-brace",
       "check-whitespace"
     ],
-    "quotemark": [
-      true,
-      "single",
-      "avoid-escape"
-    ],
-    "semicolon": [true, "never"],
+    "quotemark": [true, "single", "avoid-escape"],
+    "semicolon": [false, "never"],
+
     "typedef-whitespace": [
       true,
       {

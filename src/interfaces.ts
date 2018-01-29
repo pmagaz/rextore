@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs/Observable'
 
 export interface Rextore {
-  store$: Observable<any>
   connect: Function
   dispatch: Function
+  getState: Function
 }
 
 export interface Action {
