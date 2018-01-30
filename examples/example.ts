@@ -60,14 +60,14 @@ map(() => state => (
   state
   //console.log(44444, state.name)
 )))*/
-
+/*
 const reducer$ = Observable.of('REDUCER')
 .pipe(
   tap(x => console.log('REDUCER', x)),
   map(() => state => Object.assign({}, state, {count: state.count - 1}))
 )
-
-const store = createStore<State>(initialState, reducer$)
+*/
+const store = createStore<State>(initialState, reducer)
 
 // const store = new Store<State>(reducer, initialState) store.connect(state =>
 // state.name , next => console.log(1111, next))
@@ -82,8 +82,7 @@ store.dispatch(Observable.of({ type: 'LECHES'})
   map(() => state => Object.assign({}, state, {count: state.count + 10}))
 ))*/
 
-store.dispatch({ type: 'INCREASE' })
-console.log(2222, store.getState())
+console.log(1111, store.getState())
 store.dispatch({ type: 'INCREASE' })
 store.dispatch({ type: 'INCREASE' })
 store.dispatch({ type: 'INCREASE' })
