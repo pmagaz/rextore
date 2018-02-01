@@ -1,6 +1,6 @@
 {
   "name": "rextore",
-  "version": "0.8.0",
+  "version": "0.9.6",
   "description": "Reactive State container",
   "author": {
     "name": "Pablo Magaz",
@@ -8,8 +8,8 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "clean": "rimraf lib coverage",
-    "build": "babel src --out-dir lib",
+    "clean": "rimraf dist coverage",
+    "build": "npm run clean && tsc",
     "lint": "tslint \"src/**/*.ts\"",
     "test:coverage": "nyc npm test && nyc report --reporter=lcov",
     "test:coverage2": "TS_NODE_COMPILER_OPTIONS='{\"target\":\"es6\"}' nyc npm run test && nyc report --reporter=lcov",
@@ -35,11 +35,12 @@
   "homepage": "https://github.com/pmagaz/rextore#readme",
   "devDependencies": {
     "@types/mocha": "^2.2.47",
+    "@types/node": "^9.4.0",
     "chai": "^4.0.2",
     "coveralls": "2.13.1",
     "mocha": "^3.4.2",
     "nyc": "^11.4.1",
-    "rimraf": "2.6.1",
+    "rimraf": "^2.6.1",
     "rxjs": "^5.5.3",
     "ts-node": "^4.1.0",
     "tslint": "5.8.0",
@@ -48,20 +49,20 @@
     "typescript": "^2.6.2"
   },
   "nyc": {
-  "include": [
-    "src/*.ts",
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "typings",
-    "src/interfaces.ts"
-  ],
-  "extension": [
-    ".ts"
-  ],
-  "require": [
-    "ts-node/register"
-  ],
-  "all": true
-}
+    "include": [
+      "src/*.ts",
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "typings",
+      "src/interfaces.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "all": true
+  }
 }

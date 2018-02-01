@@ -8,8 +8,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": false,
-    "outDir": "./build",
-    "rootDir": ".",
+    "outDir": "./dist",
     "lib": ["es2015"],
     "target": "es5",
     "skipLibCheck": true,
@@ -17,8 +16,13 @@
       "node"
     ]
   },
+  "include": [
+    "src"
+  ],
   "exclude": [
     "node_modules",
-    "coverage"
+    "coverage",
+    "spec",
+    "examples"
   ]
 }
