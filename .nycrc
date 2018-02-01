@@ -1,0 +1,18 @@
+{
+  "include": [
+    "src/*.ts",
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "typings",
+    "dist",
+    "src/interfaces.ts"
+  ],
+  "extension": [
+    ".ts"
+  ],
+  "require": [
+    "ts-node/register"
+  ],
+  "all": true
+}
