@@ -18,9 +18,7 @@
     ]
   },
   "exclude": [
-	  "node_modules"
-  ],
-  "angularCompilerOptions": {
-    "strictMetadataEmit": true
-  }
+    "node_modules",
+    "coverage"
+  ]
 }

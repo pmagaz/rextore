@@ -1,4 +1,4 @@
-import { createStore, combineReducers } from '../src/rextore';
+import { createStore, combineReducers } from '../src/';
 import { Observable } from 'rxjs/Observable'
 import { tap, scan, merge, map } from 'rxjs/operators'
 import 'rxjs/add/observable/of';
@@ -57,3 +57,4 @@ store.connect(state => state.count , next => {
 })
 
 store.dispatch({ type: 'INCREASE' })
+store.dispatch({ type: 'DECREASE' })

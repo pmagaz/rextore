@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable'
 export interface Rextore {
   connect: Function
   dispatch: Function
-  combineReducers: Function
+  getState: Function
 }
 
 export interface Action {

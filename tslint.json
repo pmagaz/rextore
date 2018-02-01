@@ -6,7 +6,7 @@
     "no-consecutive-blank-lines": false,
     "comment-format": [false, "check-space"],
     "ordered-imports": false,
-    "curly": true,
+    "curly": false,
     "member-access": false,
     "member-ordering": false,
     "eofline": true,

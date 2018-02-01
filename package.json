@@ -10,9 +10,10 @@
   "scripts": {
     "clean": "rimraf lib coverage",
     "build": "babel src --out-dir lib",
-    "test:coverage": "nyc npm test && nyc report --reporter=lcov",
     "lint": "tslint \"src/**/*.ts\"",
-    "test": "mocha  --compilers js:babel-core/register \"./spec/**/*.spec.js\"",
+    "test:coverage": "nyc npm test && nyc report --reporter=lcov",
+    "test:coverage2": "TS_NODE_COMPILER_OPTIONS='{\"target\":\"es6\"}' nyc npm run test && nyc report --reporter=lcov",
+    "test": "mocha -r ts-node/register **/*.spec.ts --require source-map-support/register --recursive",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "prepublish": "npm run lint && npm run test:coverage && npm run clean && npm run build"
   },
@@ -33,16 +34,34 @@
   },
   "homepage": "https://github.com/pmagaz/rextore#readme",
   "devDependencies": {
-    "@types/node": "^8.0.54",
-    "chai": "4.0.2",
+    "@types/mocha": "^2.2.47",
+    "chai": "^4.0.2",
     "coveralls": "2.13.1",
-    "mocha": "3.4.2",
-    "nyc": "11.0.3",
+    "mocha": "^3.4.2",
+    "nyc": "^11.4.1",
     "rimraf": "2.6.1",
-    "rxjs": "5.5.3",
+    "rxjs": "^5.5.3",
+    "ts-node": "^4.1.0",
     "tslint": "5.8.0",
     "tslint-config-prettier": "^1.6.0",
     "tslint-eslint-rules": "^4.1.1",
     "typescript": "^2.6.2"
-  }
+  },
+  "nyc": {
+  "include": [
+    "src/*.ts",
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "typings",
+    "src/interfaces.ts"
+  ],
+  "extension": [
+    ".ts"
+  ],
+  "require": [
+    "ts-node/register"
+  ],
+  "all": true
+}
 }
