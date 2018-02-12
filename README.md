@@ -6,13 +6,13 @@
 [![Coverage Status](https://coveralls.io/repos/github/pmagaz/rextore/badge.svg?branch=master)](https://coveralls.io/github/pmagaz/rextore?branch=master)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-`Rextore` is a Reactive State container using RxJs and Redux.
+`Rextore` is a Reactive State container based in RxJs and Redux.
 
 ## Table of contents
 
 1. [Installation](#installation)
 2. [Usage](#usage)
-2. [Usage with Typescript](#usagets)
+2. [Typescript](#typescript)
 
 
 ## Installation
@@ -96,9 +96,9 @@ getState works in the same way of Redux getState. It retrieves whole state tree.
 const stateTree = store.getState()
 ```
 
-## Usage with Typescript
+## Typescript
 
-Rextore is written in Typescript and it has the definition type files, so you can use all the Typescript stuff for static type checking.
+Rextore is written in Typescript so you can use all the Typescript stuff for static type checking.
 
 ```javascript
 export interface State {
