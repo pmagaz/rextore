@@ -1,6 +1,6 @@
 {
   "name": "rextore",
-  "version": "0.9.71",
+  "version": "0.9.72",
   "description": "Reactive State container based in RxJs/Redux",
   "author": {
     "name": "Pablo Magaz",
@@ -47,6 +47,7 @@
     "mocha": "3.4.2",
     "nyc": "11.3.0",
     "rimraf": "2.6.1",
+    "rxjs-tslint-rules": "^3.9.0",
     "ts-node": "4.1.0",
     "tslint": "5.8.0",
     "tslint-config-prettier": "1.6.0",

@@ -1,5 +1,5 @@
 {
-  "extends": ["tslint-eslint-rules", "tslint-config-prettier"],
+  "extends": ["tslint-eslint-rules", "rxjs-tslint-rules", "tslint-config-prettier"],
   "rules": {
     "no-empty": false,
     "class-name": true,
@@ -26,6 +26,9 @@
     "no-trailing-whitespace": true,
     "no-unused-expression": true,
     "no-var-keyword": true,
+    "rxjs-no-add": { "severity": "error" },
+    "rxjs-no-operator": { "severity": "error" },
+    "rxjs-no-wholesale": { "severity": "error" },
     "one-line": [
       true,
       "check-catch",
