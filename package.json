@@ -1,7 +1,7 @@
 {
   "name": "rextore",
   "version": "0.9.73",
-  "description": "Reactive State container based in RxJs/Redux",
+  "description": "Reactive State container based in RxJs",
   "author": {
     "name": "Pablo Magaz",
     "email": "magazpablo@gmail.com"
@@ -25,6 +25,7 @@
     "redux",
     "store",
     "state",
+    "container",
     "rxjs",
     "rextore",
     "rxjs-redux",

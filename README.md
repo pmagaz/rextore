@@ -6,7 +6,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/pmagaz/rextore/badge.svg?branch=master)](https://coveralls.io/github/pmagaz/rextore?branch=master)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-`Rextore` is a Reactive State container based in RxJs and Redux.
+`Rextore` is a Reactive State container based in RxJs and inspired by Redux.
 
 ## Table of contents
 

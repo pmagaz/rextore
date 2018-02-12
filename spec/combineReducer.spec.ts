@@ -2,9 +2,7 @@ import { expect, should } from 'chai'
 import { combineReducers } from '../src/'
 
 describe('CombineReducers', () => {
-  
   it('should handle state with two or more reducers', () => {
-
     const increaseReducer = (state, action) => {
       switch (action.type) {
         case 'INCREMENT':
@@ -38,5 +36,4 @@ describe('CombineReducers', () => {
     const newState2 = rootReducer({ count: 1 }, { type: 'DECREMENT' })
     expect(newState2).to.deep.equal({ count: 0 })
   })
-
 })

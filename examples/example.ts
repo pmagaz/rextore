@@ -1,4 +1,4 @@
-import { createStore, combineReducers } from '../src/';
+import { createStore, combineReducers, store } from '../src/';
 import { Observable } from 'rxjs/Observable'
 import { tap, scan, merge, map } from 'rxjs/operators'
 import 'rxjs/add/observable/of';
@@ -50,7 +50,9 @@ const rootReducer = combineReducers({
   reducer, reducer2
 })
 
-const store = createStore<State>(initialState, rootReducer)
+createStore<State>(initialState, rootReducer)
+
+console.log(33333, store.toString())
 
 store.connect(state => state.count , next => {
   console.log(1111, next)
