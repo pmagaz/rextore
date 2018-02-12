@@ -25,7 +25,11 @@
     "redux",
     "store",
     "state",
-    "rxjs"
+    "rxjs",
+    "rextore",
+    "rxjs-redux",
+    "stream",
+    "observable"
   ],
   "license": "MIT",
   "bugs": {
