@@ -1,6 +1,6 @@
 {
   "name": "rextore",
-  "version": "0.9.7",
+  "version": "0.9.71",
   "description": "Reactive State container based in RxJs/Redux",
   "author": {
     "name": "Pablo Magaz",
@@ -36,6 +36,9 @@
     "url": "https://github.com/pmagaz/rextore/issues"
   },
   "homepage": "https://github.com/pmagaz/rextore#readme",
+  "dependencies": {
+    "rxjs": "5.5.6"
+  },
   "devDependencies": {
     "@types/mocha": "2.2.47",
     "@types/node": "9.4.0",
@@ -44,7 +47,6 @@
     "mocha": "3.4.2",
     "nyc": "11.3.0",
     "rimraf": "2.6.1",
-    "rxjs": "5.5.6",
     "ts-node": "4.1.0",
     "tslint": "5.8.0",
     "tslint-config-prettier": "1.6.0",
