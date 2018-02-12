@@ -8,8 +8,9 @@ examples
 .travis.yml
 .appveyor.yml
 .nycrc
-.mocha.opts
+mocha.opts
 tsconfig.json
 tslint.json
 *.swp
 *.log
+.coveralls.yml
