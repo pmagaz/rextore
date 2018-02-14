@@ -1,3 +1,3 @@
 export const actions = {
-  INIT : { type: 'REXTORE_INIT' }
+  INIT : { type: '[REXTORE_INIT]' }
 }

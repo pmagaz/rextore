@@ -1,8 +1,10 @@
+import { actions } from './actions'
 import { createStore } from './store'
 import { createConnect } from './connect'
-import { actions } from './actions'
 import { createDispatcher } from './dispatcher'
 import { Rextore, Reducer, Action, Middleware } from './interfaces'
+
+import { Observable } from 'rxjs/Observable'
 
 export const createRextore = <T>(initialState: T, rootReducer: Reducer<T>, middleware?: any): Rextore<T> => {
 
@@ -14,7 +16,7 @@ export const createRextore = <T>(initialState: T, rootReducer: Reducer<T>, middl
   const dispatcher$ = createDispatcher(store$, rootReducer, middleware)
 
   const getState = () => store$.value
-  const dispatch = (action: Action) => dispatcher$.next(action)
+  const dispatch = (action: Action) => dispatcher$.next(Observable.of(action))
   //dispatch(actions.INIT)
 
   return { connect, dispatch, getState }

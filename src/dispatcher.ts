@@ -1,4 +1,4 @@
-import { scan, map, tap } from 'rxjs/operators'
+import { scan, map, tap, concatMap  } from 'rxjs/operators'
 import { Subject } from 'rxjs/Subject'
 import { Subscription } from 'rxjs/Subscription'
 
@@ -8,10 +8,14 @@ export const createDispatcher = <T>(store$, reducers, middleware) => {
 
   const dispatcher$ = new Subject<T>()
 
+  const midd = (action) => action.pipe(tap((x) => console.log(111111, x)))
   dispatcher$
-    .pipe(
-      map((action) => middleware(store$, action, dispatcher$)),
-      tap(x => console.log(66666, x)),
+    .pipe(/*
+      map((action) => {
+        return middleware(store$, action, dispatcher$)
+      }),*/
+      //concatMap(action => middleware(store$, action, dispatcher$)),
+      tap(x => console.log(`[DISPATCHER]`, x)),
       scan((state: T, action: Action, index: number) => reducers(state, action), store$.value)
     )
   .subscribe(store$)
