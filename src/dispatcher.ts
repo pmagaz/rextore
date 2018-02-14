@@ -4,9 +4,9 @@ import {Subscription} from 'rxjs/Subscription'
 import { disconnect } from 'cluster';
 let dispatcherInstance
 
-export const dispatcher = <T>(store$, reducers, initialState) => {
+export const createDispatcher = <T>(store$, reducers, initialState) => {
 
-  const dispatcher$ = new Subject()
+  const dispatcher$ = new Subject<T>()
 
   dispatcher$
     .pipe(

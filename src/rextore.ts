@@ -1,34 +1,20 @@
-/*import { BehaviorSubject } from 'rxjs/BehaviorSubject'
-
-import { connector } from './connect'
-import { dispatcher } from './dispatcher'
+import { createStore } from './store'
+import { createConnect } from './connect'
+import { createDispatcher } from './dispatcher'
 import { Rextore, Reducer, Action } from './interfaces'
 
-let store$$
+export const rextore = <T>(initialState: T, rootReducer: Reducer<T>): Rextore<T> => {
 
-export const createLeches = <T> (initialState, rootReducer): Rextore => {
+  if (typeof initialState !== 'object') throw new Error('Initial State should be an Object')
+  else if (typeof rootReducer !== 'function') throw new Error('You sould use combineReducers function')
 
-  const store$ = new BehaviorSubject(initialState)
-  const connect = connector(store$)
-  const dispatcher$ = dispatcher(store$, rootReducer, initialState)
-  const dispatch = (action: Action ): void => (
-    dispatcher$.next(action)
-  )
+  const store$ = createStore(initialState)
+  const connect = createConnect(store$)
+  const dispatcher$ = createDispatcher(store$, rootReducer, initialState)
 
-  const getState = (): T => store$.value
+  const getState = () => store$.value
+  const dispatch = (action: Action) => dispatcher$.next(action)
 
-  store$$ = { ...store$, ...connect, ...dispatch, ...getState }
+  return { connect, dispatch, getState }
 
-  return store$$
-  //return { connect, dispatch, getState }
-}
-
-export const store = {}
-*/
-
-let leches 
-export const store = (data) => {
-  if (!leches) leches = data
-  console.log(1111, leches)
-  return leches
 }

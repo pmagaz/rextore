@@ -1,16 +1,16 @@
 import { expect, should } from 'chai'
-import { createStore, combineReducers } from '../src/';
+import { rextore, createRootReducer } from '../src/';
 
-describe('Connector', () => {
+describe('createConnect', () => {
 
   it('Sould subscribe to the store and retrieve a state data', () => {
     const initialState = { count: 222 }
     const reducer = (state, action) => ( state )
-    const rootReducer = combineReducers({
+    const rootReducer = createRootReducer({
       reducer
     })
 
-    const store = createStore(initialState , rootReducer) 
+    const store = rextore(initialState , rootReducer) 
 
     store.connect(state => state , count => (
       expect(count).to.equal(initialState)
