@@ -1,4 +1,4 @@
-import { createRextore, createRootReducer } from '../src/';
+import { createRextore, createRootReducer, createMiddleware } from '../src/';
 import { Observable } from 'rxjs/Observable'
 import { tap, scan, merge, map } from 'rxjs/operators'
 import 'rxjs/add/observable/of';
@@ -12,7 +12,7 @@ const initialState = {
 }
 
 const reducer = (state, action) => {
-  console.log('[REDUCTING]', state, '@@@@', action)
+  //console.log('[REDUCTING]', state, '@@@@', action)
   switch (action.type) {
     case 'INCREASE':
         return {
@@ -30,7 +30,7 @@ const reducer = (state, action) => {
 }
 
 const reducer2 = (state, action) => {
-  console.log('[REDUCTING 2]', state, '@@@@', action)
+  //console.log('[REDUCTING 2]', state, '@@@@', action)
   switch (action.type) {
     case 'ADD2':
       console.log('ADDD2')
@@ -50,13 +50,27 @@ const rootReducer = createRootReducer({
   reducer, reducer2
 })
 
-const rextore = createRextore<State>(initialState, rootReducer)
+const middlewareOne = (store, action, dispatch) => {
+  const { request, type, ...rest } = action
+  console.log('[REXLOG]' + type)
+  //dispatch.next({ type, ...rest })
+
+  //next(store, action)
+
+}
+
+const middlewareTwo = store => next => action => {
+  console.log(9999999, store, next, action)
+}
+
+const middleware = createMiddleware([middlewareOne]);
+const rextore = createRextore<State>(initialState, rootReducer, middleware)
 
 rextore.connect(state => state.count , next => {
-  console.log(1111, next)
+  console.log(4444444, next)
 })
 
 rextore.dispatch({ type: 'INCREASE' })
 rextore.dispatch({ type: 'DECREASE' })
-rextore.dispatch({ type: 'DECREASE' })
-rextore.dispatch({ type: 'DECREASE' })
+/*rextore.dispatch({ type: 'DECREASE' })
+rextore.dispatch({ type: 'DECREASE' })*/

@@ -14,3 +14,9 @@ export interface Action {
 export interface Reducer<T> {
   (state: T, action: Action): T
 }
+
+export interface Middleware<T> {
+  (state: T, action: Action): T
+
+  //(observable: Observable<any>): Observable<any>;
+}
