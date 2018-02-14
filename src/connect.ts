@@ -1,6 +1,5 @@
 import { Subscription } from 'rxjs/Subscription'
-import { distinctUntilChanged } from 'rxjs/operators'
-import { filter, tap, scan, merge, map, pluck, mergeMap, mergeAll } from 'rxjs/operators'
+import { map, distinctUntilChanged } from 'rxjs/operators'
 
 export const createConnect = <T, R>(store$): Function => {
   return function <T, R>(selector: ((state: T) => R), callback: Function): Subscription {
