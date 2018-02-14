@@ -30,7 +30,7 @@ $ yarn install rextore --add
 First of all you need to create the store, define an initial state and add the rootReducer, a combination of all your reducers using combineReducers to the createStore method.
 
 ```javascript
-import { rextore, combineReducers } from 'rextore'
+import { createRextore, combineReducers } from 'rextore'
 
 const initialState = {
   count: 0
@@ -40,7 +40,7 @@ const rootReducer = createRootReducer({
   reducer, reducer2...
 })
 
-const store = rextore(initialState, rootReducer)
+const rextore = createRextore(initialState, rootReducer)
 
 ```
 
@@ -49,7 +49,7 @@ const store = rextore(initialState, rootReducer)
 You can dispatch a traditional Redux Action using the dispatch method of your store instance in the same way of Redux dispatch its Actions:
 
 ```javascript
-store.dispatch({
+rextore.dispatch({
   type: 'NEW_NUMBER',
   payload: { number: 11 }
 })
@@ -80,7 +80,7 @@ Inspired by [react-redux](https://github.com/reactjs/react-redux) connect method
 
 
 ```javascript
-store.connect(state => state.count // specific node of the store
+rextore.connect(state => state.count // specific node of the store
 , next => { // next is the count value
   ...
 })
@@ -93,7 +93,7 @@ getState works in the same way of Redux getState. It retrieves whole state tree.
 
 
 ```javascript
-const stateTree = store.getState()
+const stateTree = rextore.getState()
 ```
 
 ## Typescript
@@ -113,7 +113,7 @@ const rootReducer = createRootReducer({
   reducer, reducer2...
 })
 
-const store = rextore<State>(initialState, rootReducer)
+const rextore = createRextore<State>(initialState, rootReducer)
 ``` 
 
 ## License

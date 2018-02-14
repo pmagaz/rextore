@@ -1,9 +1,9 @@
 import { expect, should } from 'chai'
-import { rextore, createRootReducer } from '../src/'
+import { createRextore, createRootReducer } from '../src/'
 
 describe('Rextore', () => {
   
-  it('Should create a store with initial state', () => {
+  it('Should create a rextore with initial state', () => {
     
     const mockReducer = (state, action) => {
       switch (action.type) {
@@ -17,9 +17,9 @@ describe('Rextore', () => {
     })
 
     const initialState = { count: 33}; 
-    const store = rextore(initialState, rootReducer)
-    const storeValue = store.getState();
-    expect(storeValue).to.deep.equal(initialState)
+    const rextore = createRextore(initialState, rootReducer)
+    const rextoreValue = rextore.getState();
+    expect(rextoreValue).to.deep.equal(initialState)
   })
 
   it('Should dispatch an action and reduce the state', () => {
@@ -41,11 +41,11 @@ describe('Rextore', () => {
     })
 
     const initialState = { count: 10}; 
-    const store = rextore(initialState, rootReducer)
-    store.dispatch({ type: 'INCREMENT' })
-    store.dispatch({ type: 'INCREMENT' })
-    const storeValue = store.getState();
-    expect(storeValue).to.deep.equal({ count: 12 })
+    const rextore = createRextore(initialState, rootReducer)
+    rextore.dispatch({ type: 'INCREMENT' })
+    rextore.dispatch({ type: 'INCREMENT' })
+    const rextoreValue = rextore.getState();
+    expect(rextoreValue).to.deep.equal({ count: 12 })
   })
 
   it('should throw Error with incorrect initialState', (done) => {
@@ -59,7 +59,7 @@ describe('Rextore', () => {
     const rootReducer = createRootReducer({
     })
     
-    expect(() => rextore('', rootReducer)).to.throw(Error);
+    expect(() => createRextore('', rootReducer)).to.throw(Error);
     done();
 
   });
@@ -76,7 +76,7 @@ describe('Rextore', () => {
     const rootReducer = createRootReducer({
     })
     
-    expect(() => rextore({})).to.throw(Error);
+    expect(() => createRextore({})).to.throw(Error);
     done();
 
   });

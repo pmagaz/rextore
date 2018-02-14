@@ -1,5 +1,5 @@
 import { expect, should } from 'chai'
-import { rextore, createRootReducer } from '../src/';
+import { createRextore, createRootReducer } from '../src/';
 
 describe('createConnect', () => {
 
@@ -10,7 +10,7 @@ describe('createConnect', () => {
       reducer
     })
 
-    const store = rextore(initialState , rootReducer) 
+    const store = createRextore(initialState , rootReducer) 
 
     store.connect(state => state , count => (
       expect(count).to.equal(initialState)
