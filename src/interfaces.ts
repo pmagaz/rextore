@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable'
 
-export interface iRextore<T> {
+export interface Rextore<T> {
   getState: () => T
   connect: Function
   dispatch: (action: Action ) => void
