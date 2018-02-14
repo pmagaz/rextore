@@ -30,17 +30,17 @@ $ yarn install rextore --add
 First of all you need to create the store, define an initial state and add the rootReducer, a combination of all your reducers using combineReducers to the createStore method.
 
 ```javascript
-import { createStore, combineReducers } from 'rextore'
+import { rextore, combineReducers } from 'rextore'
 
 const initialState = {
   count: 0
 }
 
-const rootReducer = combineReducers({
+const rootReducer = createRootReducer({
   reducer, reducer2...
 })
 
-const store = createStore(initialState, rootReducer)
+const store = rextore(initialState, rootReducer)
 
 ```
 
@@ -109,11 +109,11 @@ const initialState = {
   count: 0
 }
 
-const rootReducer = combineReducers({
+const rootReducer = createRootReducer({
   reducer, reducer2...
 })
 
-const store = createStore<State>(initialState, rootReducer)
+const store = rextore<State>(initialState, rootReducer)
 ``` 
 
 ## License
