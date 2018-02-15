@@ -1,9 +1,9 @@
-import { createRextore, createRootReducer, applyMiddleware } from '../src/';
+import { createRextore, mergeReducers, applyMiddleware } from '../src/';
 import { Observable } from 'rxjs/Rx'
 import { tap, scan, merge, map, mapTo, filter, mergeMap, switchMap, mergeAll, concatAll } from 'rxjs/operators'
 import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/forkJoin';
 
+import { ofType } from '../src/operators'
 export interface State {
   count: any
 }
@@ -81,16 +81,12 @@ const requestMiddleware = (store, action, next) => {
 };*/
 
 
-export const combineReduxcers = (...handlers) => (store$, action) => (
-  Observable.merge(
-    ...handlers.map(handler => handler(store$, action)
-  ))
-)
-
   const reduxcer = (store$, action$) => (
-    action$
-      .filter(x => x.type === 'INCREASE')
-      .map(x => 'holaaaaaa')
+    action$.pipe(
+      //ofType('INCREASE'),
+      filter(x => x.type === 'INCREASE'),
+      map(x => 'holaaaaaa'),
+    )
       //tap(x => console.log(x)),
   )
   
@@ -100,10 +96,10 @@ export const combineReduxcers = (...handlers) => (store$, action) => (
       .map(x => 'adiossss')
       //tap(x => console.log(x)),
   )
-const rootReduxcer = combineReduxcers(reduxcer, reduxcer2)
-const rootReducer = createRootReducer({reducer, reducer2})
+const rootReducer = mergeReducers(reduxcer, reduxcer2)
+//const rootReducer = createRootReducer({reducer, reducer2})
 const middleware = applyMiddleware([middlewareOne]);
-const rextore = createRextore<State>(initialState, rootReducer, middleware, rootReduxcer)
+const rextore = createRextore<State>(initialState, rootReducer, middleware)
 
 rextore.connect(state => state , next => {
   console.log(777777, next)

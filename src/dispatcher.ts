@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Subscription'
 import { Observable } from 'rxjs/Rx'
 import { Rextore, Reducer, Action } from './interfaces'
 
-export const createDispatcher = <T>(store$, reducers, middleware, rootReduxcer) => {
+export const createDispatcher = <T>(store$, rootReducer, middleware) => {
 
   const dispatcher$ = new Subject<T>()
 
@@ -12,7 +12,7 @@ export const createDispatcher = <T>(store$, reducers, middleware, rootReduxcer) 
     .pipe(
      tap(x => console.log(`[DISPATCHER]`, x.value)),
      mergeScan<any, T>((state: T, action$: Action): Observable<T> => (
-      rootReduxcer(state, action$)), store$
+      rootReducer(state, action$)), store$
      ),
      tap(x => console.log(`[DISPATCHER]`, x)),
     )
