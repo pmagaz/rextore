@@ -1,7 +1,8 @@
 import { createRextore, createRootReducer, applyMiddleware } from '../src/';
-import { Observable } from 'rxjs/Observable'
-import { tap, scan, merge, map } from 'rxjs/operators'
+import { Observable } from 'rxjs/Rx'
+import { tap, scan, merge, map, mapTo, filter, mergeMap, switchMap, mergeAll, concatAll } from 'rxjs/operators'
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/forkJoin';
 
 export interface State {
   count: any
@@ -52,9 +53,7 @@ const reducer2 = (state, action) => {
       return state
   }
 }
-const rootReducer = createRootReducer({
-  reducer, reducer2
-})
+
 
 /*
 const middlewareOne = (store, action, next) => {
@@ -82,15 +81,37 @@ const requestMiddleware = (store, action, next) => {
 };*/
 
 
-const middleware = applyMiddleware([middlewareOne]);
-const rextore = createRextore<State>(initialState, rootReducer, middleware)
+export const combineReduxcers = (...handlers) => (store$, action) => (
+  Observable.merge(
+    ...handlers.map(handler => handler(store$, action)
+  ))
+)
 
-rextore.connect(state => state.count , next => {
-  //console.log(4444444, next)
+  const reduxcer = (store$, action$) => (
+    action$
+      .filter(x => x.type === 'INCREASE')
+      .map(x => 'holaaaaaa')
+      //tap(x => console.log(x)),
+  )
+  
+  const reduxcer2 = (store$, action$) => (
+    action$
+      .filter(x => x.type === 'INCREASE')
+      .map(x => 'adiossss')
+      //tap(x => console.log(x)),
+  )
+const rootReduxcer = combineReduxcers(reduxcer, reduxcer2)
+const rootReducer = createRootReducer({reducer, reducer2})
+const middleware = applyMiddleware([middlewareOne]);
+const rextore = createRextore<State>(initialState, rootReducer, middleware, rootReduxcer)
+
+rextore.connect(state => state , next => {
+  console.log(777777, next)
 })
 
 rextore.dispatch({ type: 'INCREASE' })
-rextore.dispatch({ type: 'REQUEST' , request: () => true})
+//rextore.dispatch({ type: 'INCREASE' })
+//rextore.dispatch({ type: 'REQUEST' , request: () => true})
 rextore.dispatch({ type: 'DECREASE' })
 /*rextore.dispatch({ type: 'DECREASE' })
 rextore.dispatch({ type: 'DECREASE' })*/

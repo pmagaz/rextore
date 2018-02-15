@@ -1,22 +1,20 @@
-import { scan, map, tap, concatMap  } from 'rxjs/operators'
+import { filter, scan, mergeScan, map, tap, concatMap, mergeMap, concat, concatAll, mergeAll, switchMap } from 'rxjs/operators'
 import { Subject } from 'rxjs/Subject'
 import { Subscription } from 'rxjs/Subscription'
-
+import { Observable } from 'rxjs/Rx'
 import { Rextore, Reducer, Action } from './interfaces'
 
-export const createDispatcher = <T>(store$, reducers, middleware) => {
+export const createDispatcher = <T>(store$, reducers, middleware, rootReduxcer) => {
 
   const dispatcher$ = new Subject<T>()
 
-  const midd = (action) => action.pipe(tap((x) => console.log(111111, x)))
   dispatcher$
-    .pipe(/*
-      map((action) => {
-        return middleware(store$, action, dispatcher$)
-      }),*/
-      //concatMap(action => middleware(store$, action, dispatcher$)),
-      tap(x => console.log(`[DISPATCHER]`, x)),
-      scan((state: T, action: Action, index: number) => reducers(state, action), store$.value)
+    .pipe(
+     tap(x => console.log(`[DISPATCHER]`, x.value)),
+     mergeScan<any, T>((state: T, action$: Action): Observable<T> => (
+      rootReduxcer(state, action$)), store$
+     ),
+     tap(x => console.log(`[DISPATCHER]`, x)),
     )
   .subscribe(store$)
 

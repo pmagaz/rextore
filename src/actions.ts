@@ -1,3 +1,5 @@
-export const actions = {
-  INIT : { type: '[REXTORE_INIT]' }
+import { Observable } from 'rxjs/Observable'
+
+export const actions$ = {
+  INIT : Observable.of({ type: '[REXTORE_INIT]' })
 }
