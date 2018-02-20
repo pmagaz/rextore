@@ -6,7 +6,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/pmagaz/rextore/badge.svg?branch=master)](https://coveralls.io/github/pmagaz/rextore?branch=master)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-`Rextore` is a Reactive State container based in RxJs and inspired by Redux.
+`Rextore` is a Minimalistic Reactive State container based in RxJs and inspired by Redux & Redux-Observable. In Rextore everything is an Observable/Stream so your actions, reducers and middleware will be also Observables. 
 
 ## Table of contents
 
@@ -27,42 +27,45 @@ $ yarn install rextore --add
 
 ### Creating the Store
 
-First of all you need to create the store, define an initial state and add the rootReducer, a combination of all your reducers using combineReducers to the createStore method.
+First of all you need to create the store, define an initial state and add the rootReducer to it that is a merge of all your reducers using mergeReducers Rextore method.
 
 ```javascript
-import { createRextore, combineReducers } from 'rextore'
+import { createRextore, mergeReducers } from 'rextore'
 
 const initialState = {
   count: 0
 }
 
-const rootReducer = createRootReducer({
+const rootReducer = mergeReducers(
   reducer, reducer2...
-})
+)
 
 const rextore = createRextore(initialState, rootReducer)
 
 ```
 
-### Dispatching an action
+### Observable Actions
 
-You can dispatch a traditional Redux Action using the dispatch method of your store instance in the same way of Redux dispatch its Actions:
+In Rextore, your actions are Observables but you can dispatch them in the same way of Redux dispatch its actions using plain objects with a type property to describe the type and a payload with the attached data to the action. This object will be the value emitted by the Observable Action.
 
 ```javascript
-rextore.dispatch({
-  type: 'NEW_NUMBER',
-  payload: { number: 11 }
+store.dispatch({
+  type: 'INCREMENT',
+  payload: { number: 10 }
 })
 
-...
+```
 
-const reducer = (state, action) => {
+### Reacting to actions
+
+Similar to Redux, Rextore reducers are pure functions with two arguments: action$, the Observable action, and state, the current state tree of your app. In redux you usually use a switch-based reducer to filter your actions, and return the new state:
+
+```javascript
+
+function increaseReducer(state = initialState, action) {
   switch (action.type) {
-    case 'NEW_NUMBER':
-        return {
-          ...state,
-        count: action.payload.number
-      }
+    case 'INCREASE':
+      return { ...state, count: state.count + payload.num }
     default:
       return state
   }
@@ -70,9 +73,37 @@ const reducer = (state, action) => {
 
 ```
 
+ The same operation in Rextore is quite similar becase it uses pure fuctions as reducers too, with action and state parameters, but works in a different way. You don't need a switch-based method to filter your actions so you can specify one fuction per action actionType and filter them usiing the ofType custom operator to filter your action.type or use your own filter because your actions are Observables.
+
+```javascript
+
+const increaseReducer = (action$, state) => action$
+  .ofType('INCREASE')
+  .map(({ payload }) => (
+    { ...state, count: state.count + payload.num }
+  ))
+```
+Then you always should return a new state using the the operator pipeline. If you don't new to make any modification on the state tree, simple return state using map.
+
+You can use the ofType operator as a letable/pipeable method importing the operator.
+
+```javascript
+
+import { ofType } from 'rextore'
+
+const decreaseReducer = (action$, state) => action$
+  .pipe(
+    ofType('DECREASE'),
+    map(({ payload }) => (
+      { ...state, count: state.count - payload.num }
+    ))
+  )
+
+```
+
 ### Retrieving data from the Store
 
-Rextore uses RxJs provides a few methods to subscribe to the store and/or retrieve data from it: 
+Rextore store is also an Observable, so you can retrieve data from it in the reactive way. Rextore provides a few methods to subscribe to the store and/or retrieve data from it: 
 
 #### Connect
 
@@ -89,7 +120,7 @@ rextore.connect(state => state.count // specific node of the store
 
 #### getState
 
-getState works in the same way of Redux getState. It retrieves whole state tree. This function is syncronous.
+getState works in the same way of Redux getState. It returns the whole state tree. This function is syncronous.
 
 
 ```javascript
