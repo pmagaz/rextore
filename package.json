@@ -14,7 +14,7 @@
     "test:coverage": "nyc npm test && nyc report --reporter=lcov",
     "test": "mocha -r ts-node/register **/*.spec.ts",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
-    "prepublish": "npm run lint && npm run test:coverage && npm run clean && npm run build"
+    "prepublish": "npm run lint && npm run test:coverage && npm run build"
   },
   "repository": {
     "type": "git",
