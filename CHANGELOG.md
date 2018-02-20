@@ -1,3 +1,9 @@
+1.0.0 / 2018-02-20
+==================
+
+* Use Observable Actions
+* Reducers are now Observables
+
 0.9.76 / 2018-02-14
 ==================
 
