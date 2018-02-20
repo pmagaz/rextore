@@ -1,39 +1,32 @@
 import { expect, should } from 'chai'
-import { createRootReducer } from '../src/'
+import { mergeReducers } from '../src/'
+import { Observable } from 'rxjs/Rx'
 
-describe('CreateRootReducer', () => {
-  it('should handle state with two or more reducers', () => {
-    const increaseReducer = (state, action) => {
-      switch (action.type) {
-        case 'INCREMENT':
-          return {
-            ...state,
-            count: ++state.count
-          }
-      default: 
-      return state
-    }
-    }
+describe('mergeReducers', () => {
+  it('should merge reducers and return an observable', (done) => {
 
-    const decreaseReducer = (state, action) => {
-      switch (action.type) {
-        case 'DECREMENT':
-          return {
-            ...state,
-            count: --state.count
-          }
-      default: 
-        return state
-      }
-    }
+    const increaseReducer = (action$, state) => action$
+      .ofType('INCREMENT')
+      .map(({ payload }) => (
+        { ...state, count: ++state.count }
+      ))
 
-    const rootReducer = createRootReducer({
+    const decreaseReducer = (action$, state) => action$
+      .ofType('INCREMENT')
+      .map(({ payload }) => (
+        { ...state, count: --state.count }
+      ))
+
+    const rootReducer = mergeReducers(
       increaseReducer, decreaseReducer
-    })
-    const newState = rootReducer({ count: 0 }, { type: 'INCREMENT' })
-    expect(newState).to.deep.equal({ count: 1 })
+    )
 
-    const newState2 = rootReducer({ count: 1 }, { type: 'DECREMENT' })
-    expect(newState2).to.deep.equal({ count: 0 })
+    const increaseAction = Observable.of({ type: 'INCREMENT'})
+    rootReducer(increaseAction, { count: 0 })
+      .subscribe(x => {
+        expect(x).to.deep.equal({ count: 1 })
+        done()
+      })
   })
+
 })

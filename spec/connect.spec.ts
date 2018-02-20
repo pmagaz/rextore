@@ -1,14 +1,17 @@
 import { expect, should } from 'chai'
-import { createRextore, createRootReducer } from '../src/';
+import { createRextore, mergeReducers } from '../src/';
 
 describe('createConnect', () => {
 
   it('Sould subscribe to the store and retrieve a state data', () => {
     const initialState = { count: 222 }
-    const reducer = (state, action) => ( state )
-    const rootReducer = createRootReducer({
-      reducer
-    })
+    const mockReducer = (action$, state) => action$
+      .ofType('INCREMENT')
+      .map(({ payload }) => (
+        { ...state, count: ++state.count }
+      ))
+
+     const rootReducer = mergeReducers(mockReducer)
 
     const store = createRextore(initialState , rootReducer) 
 
