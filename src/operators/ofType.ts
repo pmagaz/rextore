@@ -35,4 +35,10 @@ export function ofTypePrototype(actionType) {
   );
 }
 
+declare module 'rxjs/Observable' {
+  interface Observable<T> {
+    ofType: typeof ofType;
+  }
+}
+
 Observable.prototype.ofType = ofTypePrototype
