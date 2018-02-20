@@ -1,4 +1,4 @@
-import { createRextore, mergeReducers, ofType, applyMiddleware } from '../src/';
+import { createRextore, mergeReducers, ofType } from '../src/';
 import { Observable } from 'rxjs/Rx'
 import { tap, scan, merge, map, mapTo, filter, mergeMap, switchMap, mergeAll, concatAll } from 'rxjs/operators'
 import 'rxjs/add/observable/of';
@@ -17,14 +17,14 @@ const middlewareOne = (action) => (
   )
 )
 
- const reduxcer = (action$, state) => action$
+ const increaseReducer = (action$, state) => action$
   .ofType('INCREASE')
   .map(({ payload }) => (
     { ...state, count: state.count + payload.num }
   ))
 
 
-const reduxcer2 = (action$, state) => action$
+const decreaseReducer = (action$, state) => action$
   .pipe(
     ofType('DECREASE'),
     map(x => (
@@ -32,9 +32,8 @@ const reduxcer2 = (action$, state) => action$
     ))
   )
 
-const rootReducer = mergeReducers(reduxcer, reduxcer2)
-const middleware = applyMiddleware([middlewareOne]);
-const rextore = createRextore<State>(initialState, rootReducer, middleware)
+const rootReducer = mergeReducers(increaseReducer, decreaseReducer)
+const rextore = createRextore<State>(initialState, rootReducer)
 
 rextore.connect(state => state, next => {
   console.log(777777, next)
