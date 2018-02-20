@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 
-export const createStore = (initialState) => (
+export const createStore = <T>(initialState): BehaviorSubject<T> => (
   new BehaviorSubject(initialState)
 )

@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs/Observable'
 
-export interface Rextore<T> {
-  getState: () => T
+export interface Rextore {
   connect: Function
+  getState: () => Object
   dispatch: (action: Action ) => void
 }
 
@@ -13,11 +13,9 @@ export interface Action {
 }
 
 export interface Reducer<T> {
-  (state: T, action: Action): T
+  (action$: Observable<Action>, state: T): Observable<T>
 }
 
 export interface Middleware<T> {
   (state: T, action: Action): T
-
-  //(observable: Observable<any>): Observable<any>;
 }
