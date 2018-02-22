@@ -6,13 +6,19 @@
 [![Coverage Status](https://coveralls.io/repos/github/pmagaz/rextore/badge.svg?branch=master)](https://coveralls.io/github/pmagaz/rextore?branch=master)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-`Rextore` is a Minimalistic Reactive State container based in RxJs and inspired by Redux & Redux-Observable. In Rextore everything is an Observable/Stream so your actions, reducers and middleware will be also Observables. 
+`Rextore` is a Minimalistic Reactive State container based in RxJs and inspired by Redux & Redux-Observable. In Rextore everything is an Observable/Stream so your actions, reducers and middleware are also Observables. 
 
 ## Table of contents
 
-1. [Installation](#installation)
-2. [Usage](#usage)
-2. [Typescript](#typescript)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Creating the Store](#creating-the-store)
+  - [Observable Actions](#observable-actions)
+  - [Reacting to Actions](#reacting-to-actions)
+  - [Subscribing to Store](#subscribing-to-store)
+    - [select$](#select$)
+    - [select](#select)
+- [Typescript](#typescript)
 
 
 ## Installation
@@ -27,7 +33,7 @@ $ yarn install rextore --add
 
 ### Creating the Store
 
-First of all you need to create the store, define an initial state and add the rootReducer to it that is a merge of all your reducers using mergeReducers Rextore method.
+First of all you need to create the store, define an initial state and add the rootReducer to it that is a combination of all your reducers using mergeReducers method. 
 
 ```javascript
 import { createRextore, mergeReducers } from 'rextore'
@@ -41,7 +47,6 @@ const rootReducer = mergeReducers(
 )
 
 const rextore = createRextore(initialState, rootReducer)
-
 ```
 
 ### Observable Actions
@@ -53,7 +58,6 @@ store.dispatch({
   type: 'INCREMENT',
   payload: { number: 10 }
 })
-
 ```
 
 ### Reacting to actions
@@ -61,7 +65,6 @@ store.dispatch({
 Similar to Redux, Rextore reducers are pure functions with two arguments: action$, the Observable action, and state, the current state tree of your app. In redux you usually use a switch-based reducer to filter your actions, and return the new state:
 
 ```javascript
-
 function increaseReducer(state = initialState, action) {
   switch (action.type) {
     case 'INCREASE':
@@ -70,25 +73,20 @@ function increaseReducer(state = initialState, action) {
       return state
   }
 }
-
 ```
 
- The same operation in Rextore is quite similar becase it uses pure fuctions as reducers too, with action and state parameters, but works in a different way. You don't need a switch-based method to filter your actions so you can specify one fuction per action actionType and filter them usiing the ofType custom operator to filter your action.type or use your own filter because your actions are Observables.
+ The same operation in Rextore is quite similar becase it uses pure fuctions as reducers too, with action and state parameters, but works in a different way. You don't need a switch-based method to filter your actions so you can specify one fuction per action actionType and filter them using the ofType custom operator to filter your action.type or use your own filter because your actions are Observables.
 
 ```javascript
-
 const increaseReducer = (action$, state) => action$
   .ofType('INCREASE')
   .map(({ payload }) => (
     { ...state, count: state.count + payload.num }
   ))
 ```
-Then you always should return a new state using the the operator pipeline. If you don't new to make any modification on the state tree, simple return state using map.
-
-You can use the ofType operator as a letable/pipeable method importing the operator.
+Then you always should return a new state using the the operator pipeline. If you don't new to make any modification on the state tree, simple return state using map. You can use the ofType operator as a letable/pipeable method importing the operator.
 
 ```javascript
-
 import { ofType } from 'rextore'
 
 const decreaseReducer = (action$, state) => action$
@@ -98,25 +96,57 @@ const decreaseReducer = (action$, state) => action$
       { ...state, count: state.count - payload.num }
     ))
   )
-
 ```
 
-### Retrieving data from the Store
+### Subscribing to Store
 
-Rextore store is also an Observable, so you can retrieve data from it in the reactive way. Rextore provides a few methods to subscribe to the store and/or retrieve data from it: 
+Rextore store is an Observable so you can get slices or nodes of your state tree as Observables. Rextore provides two select methods to get these slices and listen for it changes.
 
-#### Connect
+#### select$
 
-Inspired by [react-redux](https://github.com/reactjs/react-redux) connect method, connect establish a RxJs subscription with the store. It require two arguments. A function who receives the state object and a RxJs next callback to the subscription.
-
+The select$ method allows you to subscribe to the state tree using RxJs operators in the same way you work with RxJs operators. The method excepts to receive a chain of RxJs operators: 
 
 ```javascript
-rextore.connect(state => state.count // specific node of the store
-, next => { // next is the count value
-  ...
-})
+const initialState = { count: 0 }
 
+...
+
+rextore.select$(
+  map(state => state.count), // accesing count node
+  filter(count => count === 0)// filtering...
+  map(count => count * 2)
+  // more operators here....
+)
 ```
+
+Select$ returns a subscription to the store, so when you use selec$ method you are stabilising and subscription to the store and its state tree:
+
+```javascript
+const decreaseReducer = (action$, state) =>   action$
+  .pipe(
+    ofType('INCREASE'),
+    map(({ payload }) => (
+      { ...state, count: state.count + payload.num }
+    ))
+  )
+
+rextore.dispatch({ type: 'INCREASE', payload: { num : 2 })
+
+// In other part of your app
+rextore.select$(
+  map(state => state.count), // count = 2
+)
+```
+
+#### select
+
+Select works a little bit diferent to select$ because it excepts to receive a selector function as a selector on the Store Observable and returns an Observable:
+
+```javascript
+const data$ = rextore.select(state => state.count)
+data$.subscribe(count => ...)
+```
+
 
 #### getState
 
@@ -140,7 +170,7 @@ const initialState = {
   count: 0
 }
 
-const rootReducer = createRootReducer({
+const rootReducer = mergeReducers({
   reducer, reducer2...
 })
 

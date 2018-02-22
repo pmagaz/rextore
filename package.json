@@ -1,7 +1,7 @@
 {
   "name": "rextore",
-  "version": "1.0.0",
-  "description": "Reactive state container based in RxJs and inspired by Redux",
+  "version": "1.1.0",
+  "description": "Minimalistic Reactive state container based in RxJs and inspired by Redux",
   "author": {
     "name": "Pablo Magaz",
     "email": "magazpablo@gmail.com"
