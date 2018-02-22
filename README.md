@@ -16,8 +16,6 @@
   - [Observable Actions](#observable-actions)
   - [Reacting to Actions](#reacting-to-actions)
   - [Subscribing to Store](#subscribing-to-store)
-    - [select$](#select$)
-    - [select](#select)
 - [Typescript](#typescript)
 
 
