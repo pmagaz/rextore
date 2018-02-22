@@ -1,4 +1,4 @@
-import { createRextore, mergeReducers, mergeMiddleware, ofType, select$ } from '../src/';
+import { createRextore, mergeReducers, ofType } from '../src/';
 import { Observable } from 'rxjs/Rx'
 import { tap, scan, merge, map, mapTo, filter, mergeMap, switchMap, mergeAll, concatAll } from 'rxjs/operators'
 import 'rxjs/add/observable/of';

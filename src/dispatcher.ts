@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 
 import { Action } from './interfaces'
 
-export const createDispatcher = <T>(store$: BehaviorSubject<T>, rootReducer: Function, middleware?: Function) => {
+export const createDispatcher = <T>(store$: BehaviorSubject<T>, rootReducer: Function) => {
 
   const dispatcher$ = new Subject<T>()
 

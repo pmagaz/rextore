@@ -1,10 +1,17 @@
 import { Observable } from 'rxjs/Observable'
+import { Subscription } from 'rxjs/Subscription'
 
-export interface Rextore<T> {
-  select$: Observable<T>,
-  store$: Observable<T>,
+
+export interface Selectors {
+  select$: (...Operators: any[]) => Subscription,
+  select: <T, R>(selector: (state: T) => R) => Observable<T>,
+}
+
+export interface Rextore {
   getState: () => Object
   dispatch: (action: Action ) => void
+  select$: (...Operators: any[]) => Subscription
+  select: <T, R>(selector: (state: T) => R) => Observable<T>
 }
 
 export interface Action {
