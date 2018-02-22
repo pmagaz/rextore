@@ -49,7 +49,7 @@ const rextore = createRextore(initialState, rootReducer)
 
 ### Observable Actions
 
-In Rextore, your actions are Observables but you can dispatch them in the same way of Redux dispatch its actions using plain objects with a type property to describe the type and a payload with the attached data to the action. This object will be the value emitted by the Observable Action.
+In Rextore, your actions are also Observables but you can dispatch them in the same way of Redux dispatch its actions using plain objects with a type property to describe the type and a payload with the attached data to the action. This object will be the value emitted by the Observable Action.
 
 ```javascript
 store.dispatch({
@@ -73,7 +73,7 @@ function increaseReducer(state = initialState, action) {
 }
 ```
 
- The same operation in Rextore is quite similar becase it uses pure fuctions as reducers too, with action and state parameters, but works in a different way. You don't need a switch-based method to filter your actions so you can specify one fuction per action actionType and filter them using the ofType custom operator to filter your action.type or use your own filter because your actions are Observables.
+ The same operation in Rextore is quite similar becase it uses pure fuctions as reducers too, with action and state parameters, but works in a different way. You don't need a switch-based method to filter your actions, in Rextore you can specify one fuction per action actionType and filter them using the ofType custom operator to filter your action.type or use your own filter because your actions are just Observables.
 
 ```javascript
 const increaseReducer = (action$, state) => action$
@@ -102,7 +102,7 @@ Rextore store is an Observable so you can get slices or nodes of your state tree
 
 #### select$
 
-The select$ method allows you to subscribe to the state tree using RxJs operators in the same way you work with RxJs operators. The method excepts to receive a chain of RxJs operators: 
+The select$ method allows you to subscribe to the store using operators in the same way you work with RxJs operators. The method excepts to receive a chain of RxJs operators: 
 
 ```javascript
 const initialState = { count: 0 }
@@ -117,7 +117,7 @@ rextore.select$(
 )
 ```
 
-Select$ returns a subscription to the store, so when you use selec$ method you are stabilising and subscription to the store and its state tree:
+Select$ returns a subscription to the store, so when you use selec$ method you are stabilising a subscription to the store and its state tree:
 
 ```javascript
 const decreaseReducer = (action$, state) =>   action$
@@ -148,7 +148,7 @@ data$.subscribe(count => ...)
 
 #### getState
 
-getState works in the same way of Redux getState. It returns the whole state tree. This function is syncronous.
+getState works in the same way of Redux getState. It returns the whole state tree in a syncronous way.
 
 
 ```javascript
