@@ -1,10 +1,10 @@
-import { createStore } from './store'
-import { createConnect } from './connect'
-import { actionTypes } from './actionTypes'
-import { createDispatcher } from './dispatcher'
-import { Rextore, Action } from './interfaces'
-
 import { Observable } from 'rxjs/Observable'
+
+import { createStore } from './store'
+import { createSelectors } from './select'
+import { actionTypes } from './actionTypes'
+import { Rextore, Action } from './interfaces'
+import { createDispatcher } from './dispatcher'
 
 export const createRextore = <T>(initialState: T, rootReducer: Function, middleware?: any): Rextore => {
 
@@ -12,7 +12,7 @@ export const createRextore = <T>(initialState: T, rootReducer: Function, middlew
   else if (typeof rootReducer !== 'function') throw new Error('You should use combineReducers function')
 
   const store$ = createStore(initialState)
-  const connect = createConnect(store$)
+  const selects = createSelectors(store$)
   const dispatcher$ = createDispatcher(store$, rootReducer, middleware)
 
   const getState = () => store$.value
@@ -20,6 +20,6 @@ export const createRextore = <T>(initialState: T, rootReducer: Function, middlew
   
   dispatch(actionTypes.INIT)
 
-  return { connect, dispatch, getState }
+  return { dispatch, getState, ...selects }
 
 }

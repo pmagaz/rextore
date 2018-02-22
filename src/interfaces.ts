@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs/Observable'
 
-export interface Rextore {
-  connect: Function
+export interface Rextore<T> {
+  select$: Observable<T>,
+  store$: Observable<T>,
   getState: () => Object
   dispatch: (action: Action ) => void
 }
