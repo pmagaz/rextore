@@ -1,4 +1,4 @@
-# rextore
+![Rextore](./assets/logo.png)
 
 ![Build-Status](https://travis-ci.org/pmagaz/rextore.svg?branch=master)
 [![Build status](https://ci.appveyor.com/api/projects/status/2tkhjyqj01h1pa8x?svg=true
